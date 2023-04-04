@@ -1,0 +1,32 @@
+﻿@using System.Xml.Linq;
+@model XmlModel
+
+<h1>Upload XML File</h1>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="xmlFile">Select XML file:</label>
+        <input type="file" name="xmlFile" class="form-control-file" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Content))
+{
+        <h2>Element IDs:</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var element in XDocument.Parse(Model.Content).Descendants())
+            {
+                        <tr>
+                            <td>@element.Attribute("Id")?.Value</td>
+                        </tr>
+            }
+            </tbody>
+        </table>
+}
